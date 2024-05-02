@@ -1,6 +1,6 @@
 import unittest
 import json
-from api import app, valider_donnees
+from app import app, valider_donnees
 
 features = ['FLAG_OWN_REALTY',
  'AMT_INCOME_TOTAL',
