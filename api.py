@@ -6,6 +6,10 @@ import numpy as np
 
 app = Flask(__name__)
 
+@app.route("/")
+def hello_world():
+    return "<p>Hello, World!</p>"
+
 # Chargement du modèle MLflow
 model_path = 'GBoost/model.pkl'
 with open(model_path, 'rb') as fichier:
