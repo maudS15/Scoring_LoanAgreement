@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import streamlit as st
 import plotly.graph_objects as go
 #import pickle
-import shap
+
 
 
 features = ['AMT_INCOME_TOTAL',
@@ -245,10 +245,10 @@ features = ['AMT_INCOME_TOTAL',
 
 l = len(features)
 
-seuil = 0.3
+seuil = 0.34
 
 #list of clients without target
-X = pd.read_csv("Cleaned/allfeatures_test.csv",
+X = pd.read_csv("Cleaned/apptrainOnly_test.csv",
                 index_col='SK_ID_CURR',
                 usecols=['SK_ID_CURR']+features,
                 nrows=10,
@@ -258,6 +258,8 @@ X = pd.read_csv("Cleaned/allfeatures_test.csv",
 def requete(SK_ID_CURR):
     data = X.loc[[SK_ID_CURR],:].fillna('').to_dict(orient='split', index=False)
     
+    #URL locale
+    #url = http://127.0.0.1:5000/predict/
     #URL API Azure
     url = 'https://scoringloanagreement.azurewebsites.net/predict/'
     # Envoyer la requête POST à votre API
