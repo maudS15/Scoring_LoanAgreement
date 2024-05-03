@@ -19,8 +19,8 @@ with open(model_path, 'rb') as fichier:
 def valider_donnees(data):
     if 'data' not in data:
         raise ValueError("Les données doivent contenir une clé 'data'")
-    if len(data['data'][0]) != 100:
-        raise ValueError("Les données doivent contenir exactement 100 valeurs")
+    if len(data['data'][0]) != 234:
+        raise ValueError("Les données doivent contenir exactement 234 valeurs")
     if 'columns' not in data:
         raise ValueError("Les données doivent contenir une clé 'columns'")
         
