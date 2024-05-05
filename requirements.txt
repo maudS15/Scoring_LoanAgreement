@@ -5,6 +5,10 @@ pandas==2.2.1
 plotly==5.19.0
 shap==0.42.1
 streamlit==1.32.0
+<<<<<<< HEAD
 requests==2.31.0
 imbalanced-learn==0.11.0
 scikit-learn==1.3.0
+=======
+requests==2.31.0
+>>>>>>> 7c58c3f034ecf008a3bffdc4271a98a351ad9eac
