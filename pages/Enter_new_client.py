@@ -104,7 +104,7 @@ with st.form("FORM :"):
     #categorical features
     with st.expander("Basic information", expanded=False):
         #"category
-        for c in select:
+        for c in features:
             if c in select:
                 st.selectbox(label=c,
                              options=example[c].unique().tolist(),
