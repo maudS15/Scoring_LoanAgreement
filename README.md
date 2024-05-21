@@ -1,8 +1,8 @@
 # Decision support model for granting credit to individuals with limited credit history.
 
 ## User interface
-Streamlit Dashboard
-Home_Page.py is the main page. Two other pages are in the pages repository
+Streamlit Dashboard  
+Home_Page.py is the main page. Two other pages are in the pages repository  
 Available [here](https://scoringloanagreement-mauds.streamlit.app/)
 
 ## API
