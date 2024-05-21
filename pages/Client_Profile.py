@@ -9,7 +9,7 @@ import plotly.express as px
 import shap
 
 
-
+st.set_page_config(layout='wide', initial_sidebar_state='auto',page_title="Client Profile")
 
 #meilleur seuil
 seuil = 0.31

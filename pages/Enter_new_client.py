@@ -5,6 +5,8 @@ import requests
 import plotly.graph_objects as go
 from datetime import datetime, date
 
+st.set_page_config(layout='wide', initial_sidebar_state='collapsed',page_title="New Client")
+
 
 example = pd.read_csv('Cleaned/app_train.csv', index_col='SK_ID_CURR', nrows=50000)
 example.drop(columns='TARGET', inplace=True)
@@ -100,39 +102,38 @@ with st.form("FORM :"):
 
     
     #categorical features
-    with st.expander(" Basic information", expanded=False):
+    with st.expander("Basic information", expanded=False):
+        #"category
         for c in select:
-            st.selectbox(label=c,
-                         options=example[c].unique().tolist(),
-                         index=None,
-                         key=c)
+            if c in select:
+                st.selectbox(label=c,
+                             options=example[c].unique().tolist(),
+                             index=None,
+                             key=c)
+            #numerical
+            elif c in nums:
+                mini = 0 if example[c].dtype=='int' else 0.0
+                st.number_input(label=c,
+                                value=None,
+                                min_value=mini,
+                                key=c)
+            #dates
+            elif c in days:
+                st.date_input(label=c,
+                              value=None,
+                              min_value= date(1900, 1, 1),
+                              max_value= date.today(),
+                              key=c,
+                              format="YYYY-MM-DD")
+                
     #flags
-    with st.expander("# Flags", expanded=False):
+    with st.expander("Flags", expanded=False):
         for c in flags:
             st.toggle(label=c,
                       value=False,
                       key=c)
     
     
-    #dates
-    with st.expander("Dates", expanded=False):
-        for c in days:
-            st.date_input(label=c,
-                          value=None,
-                          min_value= date(1900, 1, 1),
-                          max_value= date.today(),
-                          key=c,
-                          format="YYYY-MM-DD")
-    
-    
-    #numerical
-    with st.expander("Integers", expanded=False):
-        for c in nums:
-            mini = 0 if example[c].dtype=='int' else 0.0
-            st.number_input(label=c,
-                            value=None,
-                            min_value=mini,
-                            key=c)
     
     #living place
     with st.expander("Others", expanded=False):
