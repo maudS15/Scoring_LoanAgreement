@@ -149,6 +149,7 @@ with st.form("FORM :"):
 st.markdown("""
             <style>
             .st-emotion-cache-l9bjmx p {font-size:18px;}
+            .st-emotion-cache-1jmvea6 p {font-size:18px;}
             </style>
             """,
             unsafe_allow_html=True)
