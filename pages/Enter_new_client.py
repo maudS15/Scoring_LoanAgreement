@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 import pandas as pd
 import requests
 import plotly.graph_objects as go
@@ -23,9 +24,9 @@ def requete(df):
     data = df.fillna('').to_dict(orient='split', index=False)
     
     #URL locale
-    url = 'http://127.0.0.1:5000/predict/'
+    #url = 'http://127.0.0.1:5000/predict/'
     #URL API Azure
-    #url = 'https://scoringloanagreement.azurewebsites.net/predict/'
+    url = 'https://scoringloanagreement.azurewebsites.net/predict/'
     # Envoyer la requête POST à votre API
     response = requests.post(url, json=data)
     
@@ -75,13 +76,18 @@ if submit:
     #gauge
     jauge = go.Figure(go.Indicator(domain = {'x': [0.25,0.75], 'y': [0.5, 1]},
                                  value = proba,
-                                 mode = "gauge+number",
-                                title = {'text': "Probability of class prediction"},
+                                 mode = "gauge+number+delta",
+                                 number={'font_color':color_bar},
+                                 delta = {'reference': seuil, 'decreasing': {'color': color_bar}, 'increasing': {'color': color_bar}},
                                  gauge = {'axis': {'range': [0, 1]},
                                           'bgcolor': "white",
                                           'bar': {'color': color_bar},
                                           'threshold' : {'line': {'color': "black", 'width': 4}, 'thickness': 0.75, 'value': seuil}}))
-    st.plotly_chart(jauge, use_container_width=True)
+    jauge.update_layout(title_text=f'Probability of class prediction compared to threshold {seuil}',
+                      title_font_size = 24, font_size=16,
+                      font = {'color': 'black'}
+    )
+    st.plotly_chart(jauge, use_container_width=False)
 
 
 
@@ -89,19 +95,19 @@ if submit:
 
 
 with st.form("FORM :"):
-    st.form_submit_button("Submit New Client", on_click=buil_df_client)
+    st.form_submit_button("**Submit New Client**", on_click=buil_df_client)
     
 
     
     #categorical features
-    with st.expander("Basic information", expanded=False):
+    with st.expander(" Basic information", expanded=False):
         for c in select:
             st.selectbox(label=c,
                          options=example[c].unique().tolist(),
                          index=None,
                          key=c)
     #flags
-    with st.expander("Flags", expanded=False):
+    with st.expander("# Flags", expanded=False):
         for c in flags:
             st.toggle(label=c,
                       value=False,
@@ -113,6 +119,8 @@ with st.form("FORM :"):
         for c in days:
             st.date_input(label=c,
                           value=None,
+                          min_value= date(1900, 1, 1),
+                          max_value= date.today(),
                           key=c,
                           format="YYYY-MM-DD")
     
@@ -135,4 +143,13 @@ with st.form("FORM :"):
                             key=c)
     
 
+
+
+    
+st.markdown("""
+            <style>
+            .st-emotion-cache-l9bjmx p {font-size:18px;}
+            </style>
+            """,
+            unsafe_allow_html=True)
 

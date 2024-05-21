@@ -4,10 +4,8 @@ import requests
 import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
-import streamlit.components.v1 as components
 import plotly.graph_objects as go
 import plotly.express as px
-import pickle
 import shap
 
 
@@ -46,9 +44,9 @@ def requete(df):
     data = df.fillna('').to_dict(orient='split', index=False)
     
     #URL locale
-    url = 'http://127.0.0.1:5000/predict/'
+    #url = 'http://127.0.0.1:5000/predict/'
     #URL API Azure
-    #url = 'https://scoringloanagreement.azurewebsites.net/predict/'
+    url = 'https://scoringloanagreement.azurewebsites.net/predict/'
     # Envoyer la requête POST à votre API
     response = requests.post(url, json=data)
     
@@ -85,8 +83,10 @@ def message(pred):
 @st.cache_data
 def get_shap_values():
     #URL locale
-    url = 'http://127.0.0.1:5000/shap/'
-
+    #url = 'http://127.0.0.1:5000/shap/'
+    #URL API Azure
+    url = 'https://scoringloanagreement.azurewebsites.net/shap/'
+    
     data = new_clients.fillna('').to_dict(orient='split', index=False)
     # Envoyer la requête POST à votre API
     response = requests.post(url, json=data)
@@ -167,12 +167,6 @@ def local_feat_importance(idx):
     fig.update_yaxes(tickfont =dict(size=14, color='black'))
     
     return fig
-
-#def st_shap(plot, height=None):
-#    """"Code to display JavaScript for SHAP plots"""
-#    
-#    shap_html = f"<head>{shap.getjs()}</head><body>{plot.html()}</body>"
-#    components.html(shap_html, height=height)
 
 
 
@@ -489,3 +483,11 @@ if page == pages[2]:
             st.dataframe(pd.DataFrame({'proba':[proba, new_proba],
                                        'class':[pred, new_pred]},
                                       index=['original', 'new']))
+
+
+
+
+
+
+
+
